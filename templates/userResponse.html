@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+{% block title %}Response{% endblock %}
+{% block action %}
+<a href="/logout" class="btn btn-outline-danger me-2" role="button" aria-disabled="true">Logout</a>
+{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <!-- Sidebar for user page -->
+
+    <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light border-end vh-100 position-fixed"
+        style="width: 250px; transition: 0.3s;">
+        <button id="toggleBtn" class="btn btn-outline-info mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+            </svg></button>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="/subjects" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Back to Subjects Page" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(8, 8, 8, 1);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg>
+                    <span class="menu-text ms-2">Back to Subjects Page</span>
+                </a>
+            </li>
+            <li class="nav-item sticky-bottom">
+                <a href="/dashboard" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Back to Dashboard" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(8, 8, 8, 1);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg><span class="menu-text ms-2">Back to Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/pastAttempts" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Past Attempts" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 5h-8.586L9.707 3.293A.997.997 0 0 0 9 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z">
+                        </path>
+                    </svg><span class="menu-text ms-2">Past Attempts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/userSummary" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Summary" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z">
+                        </path>
+                        <path d="M6 7h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"></path>
+                    </svg><span class="menu-text ms-2">Summary </span>
+                </a>
+            </li>
+            <li class="nav-item sticky-bottom">
+                <a href="/logout" class="nav-link text-danger d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Logout" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(237, 66, 26, 1);transform: rotate(180deg);">
+                        <path
+                            d="M5.002 21h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-14c-1.103 0-2 .897-2 2v6.001H10V7l6 5-6 5v-3.999H3.002V19c0 1.103.897 2 2 2z">
+                        </path>
+                    </svg>
+                    <span class="menu-text ms-2 btn-outline-danger">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Main Content of the user page-->
+    <div id="mainContent" class="flex-grow-1 p-4" style="margin-left: 250px; transition: 0.3s;">
+        <div class="content w-100 mb-3 row ">
+            <h4 class="col">Subject Name:- {{quiz.chapter.subject.name}}</h4>
+            <h4 class="col">Chapter Name:- {{quiz.chapter.name}}</h4>
+        </div>
+        <div class="container mt-4">
+            <div class="table-responsive p-3 bg-white rounded shadow" style="border: 2px solid #002C54;">
+                <div class="container mt-2">
+                    <h3 class="text-center mb-2">Quiz Name:- {{quiz.name}}</h3>
+                    <h4 class="text-center mb-4">Your Response</h4>
+                    <p class=" text-end"> <span class="badge bg-info text-dark rounded-pill fs-5">
+                            Total Score:- {{totalScore}}/{{quiz.questions|length}}
+                        </span></p>
+                    {% for ques in quiz.questions %}
+                    <div class="card m-4 border-3 {% if responses[ques.id].score == 1 %} border-success-subtle 
+                    {% else %} border-danger-subtle {% endif %}">
+                        <div class="card-body">
+                            <div class="content w-100 row ">
+                                <h5 class=" col card-title">{{loop.index}}) {{ques.title}}</h5>
+                                <p class="col card-text text-end"> <span
+                                        class="badge bg-warning text-dark rounded-pill px-4 py-2 fs-6">
+                                        Score:- {{responses[ques.id].score}}
+                                    </span></p>
+                            </div>
+                            <p class="card-text">{{ques.statement}}</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ques.id}}" value="1" disabled {% if
+                                    responses[ques.id].selectedOption==1 %}checked{% endif %}>
+                                <label class="form-check-label">{{ques.option1}}</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ques.id}}" value="2" disabled {% if
+                                    responses[ques.id].selectedOption==2 %}checked{% endif %}>
+                                <label class="form-check-label">{{ques.option2}}</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ques.id}}" value="3" disabled {% if
+                                    responses[ques.id].selectedOption==3 %}checked{% endif %}>
+                                <label class="form-check-label">{{ques.option3}}</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ques.id}}" value="4" disabled {% if
+                                    responses[ques.id].selectedOption==4 %}checked{% endif %}>
+                                <label class="form-check-label">{{ques.option4}}</label>
+                            </div>
+                            <!-- Display the correct answer -->
+                            <p class="mt-3"><strong>Correct Answer:</strong>
+                                <span class="text-success">
+                                    {% if ques.correctOption == 1 %}
+                                    {{ ques.option1 }}
+                                    {% elif ques.correctOption == 2 %}
+                                    {{ ques.option2 }}
+                                    {% elif ques.correctOption == 3 %}
+                                    {{ ques.option3 }}
+                                    {% elif ques.correctOption == 4 %}
+                                    {{ ques.option4 }}
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <a href="/dashboard" class="btn btn-outline-info m-2">
+                        Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

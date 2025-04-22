@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.ico') }}" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
+
+    <title>Quiz Attempt</title>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top mb-4" style="background-color: #002C54;">
+        <div class="container-fluid mx-4">
+            <div class="content w-100 my-2 row">
+                <h4 class="col text-center text-white">
+                    {{ quiz.chapter.subject.name }} >> {{ quiz.chapter.name }} >> {{ quiz.name }}
+                </h4>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <!-- Dynamic Duration Pill -->
+                <span id="duration-pill" class="badge bg-success text-white rounded-pill px-4 py-2 fs-5" 
+                      data-duration="{{ quiz.duration }}">
+                    {{ quiz.duration }}:00 
+                </span>
+            </div>            
+            <div class="navbar-nav m-2">
+                <button onclick="window.history.back()" class="btn btn-outline-danger me-2" style="white-space: nowrap;">
+                    Go Back
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-100 position-absolute bottom-0 start-0">
+            <div class="progress" role="progressbar" aria-label="Quiz Progress" aria-valuemin="0" aria-valuemax="100" style="height: 10px;">
+                <div id="progress-bar" class="progress-bar progress-bar-striped bg-success" style="width: 0%;">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <form id="quizAttemptform" action="#" method="POST">
+            <div class="container p-3 bg-white rounded shadow m-4" style="border: 2px solid #002C54;">
+                <h4 class="text-center mb-4">Quiz Description:- {{ quiz.desc }}</h4>
+
+                {% for ques in quiz.questions %}
+                <div class="card m-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ loop.index }}) {{ ques.title }}</h5>
+                        <p class="card-text">{{ ques.statement }}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ ques.id }}" id="{{ ques.id }}1" value="1">
+                            <label for="{{ ques.id }}1" class="form-check-label">{{ ques.option1 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ ques.id }}" id="{{ ques.id }}2" value="2">
+                            <label for="{{ ques.id }}2" class="form-check-label">{{ ques.option2 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ ques.id }}" id="{{ ques.id }}3" value="3">
+                            <label for="{{ ques.id }}3" class="form-check-label">{{ ques.option3 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ ques.id }}" id="{{ ques.id }}4" value="4">
+                            <label for="{{ ques.id }}4" class="form-check-label">{{ ques.option4 }}</label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-success mt-4">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

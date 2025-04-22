@@ -1,0 +1,17 @@
+.flash-message {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    z-index: 1050;
+    opacity: 1;
+    transition: opacity 0.5s ease-out; 
+    animation: fadeOut 3s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }  
+    100% { opacity: 0; display: none; } 
+}

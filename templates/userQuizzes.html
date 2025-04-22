@@ -1,0 +1,206 @@
+{% extends "layout.html" %}
+{% block title %}{{user.name}}{% endblock %}
+{% block select %}
+<select class="form-select mx-1" aria-label="Default select example" name="key">
+    <option selected>Select</option>
+    <option value="quizzes">Quizzes</option>
+</select>
+{% endblock %}
+{% block action %}
+<a href="/logout" class="btn btn-outline-danger me-2" role="button" aria-disabled="true">Logout</a>
+{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <!-- Sidebar for user page -->
+
+    <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light border-end vh-100 position-fixed"
+        style="width: 250px; transition: 0.3s;">
+        <button id="toggleBtn" class="btn btn-outline-info mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+            </svg></button>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="/subjects" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Back to Subjects Page" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(8, 8, 8, 1);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg>
+                    <span class="menu-text ms-2">Back to Subjects Page</span>
+                </a>
+            </li>
+            <li class="nav-item sticky-bottom">
+                <a href="/dashboard" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Back to Dashboard" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(8, 8, 8, 1);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg><span class="menu-text ms-2 btn-outline-danger">Back to Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/pastAttempts" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Past Attempts" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 5h-8.586L9.707 3.293A.997.997 0 0 0 9 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z">
+                        </path>
+                    </svg><span class="menu-text ms-2">Past Attempts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/userSummary" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Summary" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z">
+                        </path>
+                        <path d="M6 7h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"></path>
+                    </svg><span class="menu-text ms-2">Summary </span>
+                </a>
+            </li>
+            <li class="nav-item sticky-bottom">
+                <a href="/logout" class="nav-link text-danger d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Logout" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(237, 66, 26, 1);transform: rotate(180deg);">
+                        <path
+                            d="M5.002 21h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-14c-1.103 0-2 .897-2 2v6.001H10V7l6 5-6 5v-3.999H3.002V19c0 1.103.897 2 2 2z">
+                        </path>
+                    </svg>
+                    <span class="menu-text ms-2 btn-outline-danger">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Main Content of the user page-->
+    <div id="mainContent" class="flex-grow-1 p-4" style="margin-left: 250px; transition: 0.3s;">
+        <div class="content w-100 mb-3 row ">
+            <h4 class="col">Subject Name:- {{subject.name}}</h4>
+            <h4 class="col">Chapter Name:- {{chapter.name}}</h4>
+        </div>
+        <div class="container mt-4">
+            <div class="table-responsive p-3 bg-white rounded shadow" style="border: 2px solid #002C54;">
+                {% if chapter.quizzes | length == 0 %}
+                <p class="text-center text-muted">No Quizzes available for this chapter. Please visit other chapters.
+                </p>
+                {% else %}
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" style="width: 5%;">S.No.</th>
+                            <th scope="col" style="width: 28%;">Quiz Name</th>
+                            <th scope="col" style="width: 20%;">Date & Time</th>
+                            <th scope="col" style="width: 9%;">Duration (Minutes)</th>
+                            <th scope="col" style="width: 9%;">No. of Questions</th>
+                            <th scope="col" style="width: 7%;">Your Score</th>
+                            <th scope="col" style="width: 22%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for quiz in quizzes %}
+                        {% set questions = quiz.questions | list %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ quiz.name }}</td>
+                            <td>{{ quiz.date.strftime('%Y-%m-%d %I:%M %p') }}</td>
+                            <td>{{ quiz.duration }}</td>
+                            <td>{{ questions | length }}</td>
+                            <td>{{ userScores.get(quiz.id, "-") }}/{{ questions | length }}</td>
+                            <td>
+                                <div class="row mx-2">
+                                    <a data-bs-toggle="modal" data-bs-target="#viewQuizModal"
+                                        class="btn btn-outline-info col viewQuizBtn" quizName="{{ quiz.name }}"
+                                        quizChap="{{ quiz.chapter.name }}" quizSub="{{ quiz.chapter.subject.name }}"
+                                        quizDate="{{ quiz.date.strftime('%Y-%m-%d %I:%M %p') }}"
+                                        quizDuration="{{ quiz.duration }}" quesLen="{{ questions | length }}"
+                                        quizDesc="{{ quiz.desc }}">
+                                        View
+                                    </a>
+                                    {% if questions | length == 0 %}
+                                    <a href="#" type="disabled" class="btn btn-outline-secondary col ms-2">
+                                        N/A
+                                    </a>
+                                    {% elif userScores.get(quiz.id, "-") != '-' %}
+                                    <a href="/{{ quiz.id }}/quizAttempt" class="btn btn-outline-success col ms-2">
+                                        Re-Attempt
+                                    </a>
+                                    {% else %}
+                                    <a href="/{{ quiz.id }}/quizAttempt" class="btn btn-outline-success col ms-2">
+                                        Attempt
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Form for Viewing Quizzes -->
+<div class="modal fade" id="viewQuizModal" tabindex="-1" aria-labelledby="viewQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="viewQuizModalLabel">Quiz Details</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mx-4">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td class="text-end">Subject Name:</td>
+                            <td id="quizSub"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">Chapter Name:</td>
+                            <td id="quizChap"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">Quiz Name:</td>
+                            <td id="quizName"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">No. of Questions:</td>
+                            <td id="quesLen"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">Scheduled Date & Time:</td>
+                            <td id="quizDate"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">Duration (Minutes):</td>
+                            <td id="quizDuration"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-end">Quiz Description:</td>
+                            <td id="quizDesc"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

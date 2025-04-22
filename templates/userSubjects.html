@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block title %}{{user.name}}{% endblock %}
+{% block select %}
+<select class="form-select mx-1" aria-label="Default select example" name="key">
+    <option selected>Select</option>
+    <option value="subject">Subject</option>
+    <option value="chapter">Chapter</option>
+</select>
+{% endblock %}
+{% block action %}
+<a href="/logout" class="btn btn-outline-danger me-2" role="button" aria-disabled="true">Logout</a>
+{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <!-- Sidebar for user page -->
+
+    <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light border-end vh-100 position-fixed"
+        style="width: 250px; transition: 0.3s;">
+        <button id="toggleBtn" class="btn btn-outline-info mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+            </svg></button>
+
+        <ul class="nav flex-column">
+            <li class="nav-item sticky-bottom">
+                <a href="/dashboard" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Back to Dashboard" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(8, 8, 8, 1);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg><span class="menu-text ms-2 btn-outline-danger">Back to Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/pastAttempts" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Past Attempts" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 5h-8.586L9.707 3.293A.997.997 0 0 0 9 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z">
+                        </path>
+                    </svg><span class="menu-text ms-2">Past Attempts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/userSummary" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Summary" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z">
+                        </path>
+                        <path d="M6 7h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"></path>
+                    </svg><span class="menu-text ms-2">Summary </span>
+                </a>
+            </li>
+            <li class="nav-item sticky-bottom">
+                <a href="/logout" class="nav-link text-danger d-flex align-items-center" data-bs-toggle="tooltip"
+                    title="Logout" data-bs-placement="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(237, 66, 26, 1);transform: rotate(180deg);">
+                        <path
+                            d="M5.002 21h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-14c-1.103 0-2 .897-2 2v6.001H10V7l6 5-6 5v-3.999H3.002V19c0 1.103.897 2 2 2z">
+                        </path>
+                    </svg>
+                    <span class="menu-text ms-2 btn-outline-danger">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Main Content of the user page-->
+    <div id="mainContent" class="flex-grow-1 p-4" style="margin-left: 250px; transition: 0.3s;">
+        <div class="content w-100">
+            <div class="row g-3 justify-content-center">
+                {% for subject in subjects%}
+                <div class="col-md-6">
+                    <div class="card" style="width: 100;">
+                        <div class="card-body bg-white rounded shadow" style="border: 2px solid #002C54;">
+                            <div class="row">
+                                <h5 class="card-title col-md-9">{{subject.name}}</h5>
+                            </div>
+                            <p class="card-text">{{subject.desc}}</p>
+                            <div style="max-height: 250px; min-height: 250px; overflow-y: auto;">
+                                {% if subject.chapters | length == 0 %}
+                                <p class="text-center text-muted">No chapters available for this subject. Please see
+                                    other Subjects.</p>
+                                {% else %}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col-md-1">S.No.</th>
+                                            <th scope="col-md-7">Chapter Name</th>
+                                            <th scope="col-md-4">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for chapter in subject.chapters %}
+                                        <tr>
+                                            <th scope="row">{{loop.index}}</th>
+
+                                            <td><span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                                                    data-bs-trigger="hover focus" data-bs-content="{{chapter.desc}}">
+                                                    {{chapter.name}}
+                                                </span></td>
+                                            <td>
+                                                <a href="/{{subject.id}}/{{chapter.id}}/quizzes"
+                                                    class="btn btn-outline-info ">
+                                                    View Quizzes
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
