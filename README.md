@@ -83,7 +83,6 @@ quiz-master/
 1. **Clone the repository**
    ```sh
    git clone https://github.com/your-username/quiz-master.git
-   cd quiz-master
    ```
 
 2. **Set up a virtual environment**
